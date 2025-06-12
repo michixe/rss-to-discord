@@ -15,8 +15,8 @@ def get_post_content(url):
         if not msg_div:
             return "⚠️ Не удалось получить текст поста"
         return msg_div.get_text(strip=True)
-    except Exception as e:
-        return f"Ошибка при получении текста: {e}"
+    except Exception:
+        return "⚠️ Ошибка при получении текста поста"
 
 def main():
     feed = feedparser.parse(RSS_URL)
@@ -35,17 +35,12 @@ def main():
         if entry.link not in sent_links:
             text = get_post_content(entry.link)
             message = f"**{entry.title}**\n{text}\n🔗 {entry.link}"
-            print(f"📤 Отправка: {entry.link}")
             requests.post(DISCORD_WEBHOOK_URL, json={"content": message})
             new_links.append(entry.link)
-        else:
-            print(f"⏩ Пропущено (уже отправлено): {entry.link}")
 
     with open("sent_links.txt", "a") as f:
         for link in new_links:
             f.write(link + "\n")
-
-    print("✅ Скрипт завершён. Новых постов отправлено:", len(new_links))
 
 if __name__ == "__main__":
     main()
