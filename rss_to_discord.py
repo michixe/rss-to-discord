@@ -1,8 +1,9 @@
 import feedparser
 import requests
+import os
 
 RSS_URL = "https://tgstat.ru/rss/en/channel/@iBakhmetNews"
-DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1382112897286799581/chmP5VoCzbkf4FZgYnqC7MvKcF3P9bi9TGOVianoV_reNDCJqghOrK_JnFN1Ogut2Yi1"
+DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL")
 
 def main():
     feed = feedparser.parse(RSS_URL)
