@@ -28,9 +28,11 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run script
+        run: |
+          echo "Running script..."
+          python rss_to_discord.py
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: python rss_to_discord.py
 
       - name: Debug: Show sent_links.txt
         run: |
